@@ -9,8 +9,9 @@ public class LeCompteEstBon {
 
     public LeCompteEstBon(Integer[] nombres,int but){
 
-        ArrayList<Integer> listeNombresAutorisees = new ArrayList<>();
+        listeNombresAutorisees = new ArrayList<Integer>();
         Collections.addAll(listeNombresAutorisees,1,2,3,4,5,6,7,8,9,10,25,50,75,100);
+        nombresDonnes = new ArrayList<>();
         Collections.addAll(nombresDonnes,nombres);
         solution = but;
     }
