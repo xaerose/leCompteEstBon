@@ -13,15 +13,16 @@ public class Main {
         ArrayList<Integer> nombresDonnes = new ArrayList<>();
         Collections.addAll(nombresDonnes,nombres);
 
-        LeCompteEstBon lceb = new LeCompteEstBon(but);
+        LeCompteEstBon lceb = new LeCompteEstBon();
 
         if(!lceb.verifierNombresDonnes(nombresDonnes)){
             System.out.println("Les nombres donnees ne sont pas bons!");
             System.exit(1);
         }
-        if(lceb.compterBon(nombresDonnes)){
-            System.out.println("Trouve");
+        if(lceb.compterBon(nombresDonnes,but)){
+           System.out.println("Trouve");
            System.out.println(lceb.getIterations());
+           System.exit(2);
         }
 
     }
