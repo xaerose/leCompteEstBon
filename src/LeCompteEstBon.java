@@ -4,32 +4,77 @@ import java.util.Collections;
 public class LeCompteEstBon {
 
     private int solution;
-    private ArrayList<Integer> nombresDonnes;
     private ArrayList<Integer> listeNombresAutorisees;
+    private int iterations;
 
-    public LeCompteEstBon(Integer[] nombres,int but){
+    public LeCompteEstBon(int but){
         listeNombresAutorisees = new ArrayList<Integer>();
         Collections.addAll(listeNombresAutorisees,1,2,3,4,5,6,7,8,9,10,25,50,75,100);
-        nombresDonnes = new ArrayList<>();
-        Collections.addAll(nombresDonnes,nombres);
         solution = but;
     }
 
-    public boolean verifierNombresDonnes(){
-        return listeNombresAutorisees.containsAll(nombresDonnes);
+    public boolean verifierNombresDonnes(ArrayList<Integer> liste){
+        return listeNombresAutorisees.containsAll(liste);
     }
 
-    public boolean compterBon(){
-        boolean trouve;
-        if(nombresDonnes.contains(solution)){
-            trouve = true;
+    public boolean compterBon(ArrayList<Integer> liste){
+        iterations++;
+        boolean trouve=false;
+        if(liste.contains(solution)){
+            return true;
         }
         else{
             trouve = false;
-            while(!trouve && nombresDonnes.size()>1){
-
+            while(!trouve && (liste.size()>1)){
+                int a = liste.get(0);
+                int b = liste.get(1);
+                if(calculer(a,b,Calcul.ADDITION)==solution){
+                    trouve = true;
+                }
+                else{
+                    ArrayList<Integer> liste1 = (ArrayList<Integer>) liste.clone();
+                    liste1.add(0,calculer(a,b,Calcul.ADDITION));
+                    liste1.remove((Integer) a);
+                    liste1.remove((Integer) b);
+                    trouve = this.compterBon(liste1);
+                }
+                if(calculer(a,b,Calcul.MULTIPLICATION)==solution){
+                    trouve = true;
+                }
+                else{
+                    ArrayList<Integer> liste1 = (ArrayList<Integer>) liste.clone();
+                    liste1.add(0,calculer(a,b,Calcul.MULTIPLICATION));
+                    liste1.remove((Integer) a);
+                    liste1.remove((Integer) b);
+                    trouve = this.compterBon(liste1);
+                }
+                if(calculer(a,b,Calcul.SOUSTRACTION)!=-1){
+                    if(calculer(a,b,Calcul.SOUSTRACTION)==solution){
+                        trouve = true;
+                    }
+                    else{
+                        ArrayList<Integer> liste1 = (ArrayList<Integer>) liste.clone();
+                        liste1.add(0,calculer(a,b,Calcul.SOUSTRACTION));
+                        liste1.remove((Integer) a);
+                        liste1.remove((Integer) b);
+                        trouve = this.compterBon(liste1);
+                    }
+                }
+                if(calculer(a,b,Calcul.DIVISION)!=-1){
+                    if(calculer(a,b,Calcul.DIVISION)==solution){
+                        trouve = true;
+                    }
+                    else{
+                        ArrayList<Integer> liste1 = (ArrayList<Integer>) liste.clone();
+                        liste1.add(0,calculer(a,b,Calcul.DIVISION));
+                        liste1.remove((Integer) a);
+                        liste1.remove((Integer) b);
+                        trouve = this.compterBon(liste1);
+                    }
+                }
             }
         }
+        System.out.println(iterations);
         return trouve;
     }
 
@@ -50,5 +95,9 @@ public class LeCompteEstBon {
             case MULTIPLICATION -> res= a*b;
         }
         return res;
+    }
+
+    public int getIterations() {
+        return iterations;
     }
 }
