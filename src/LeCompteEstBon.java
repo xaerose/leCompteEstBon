@@ -18,4 +18,37 @@ public class LeCompteEstBon {
     public boolean verifierNombresDonnes(){
         return listeNombresAutorisees.containsAll(nombresDonnes);
     }
+
+    public boolean compterBon(){
+        boolean trouve;
+        if(nombresDonnes.contains(solution)){
+            trouve = true;
+        }
+        else{
+            trouve = false;
+            while(!trouve && nombresDonnes.size()>1){
+
+            }
+        }
+        return trouve;
+    }
+
+    public int calculer(int a, int b, Calcul c) {
+        int res = -1;
+        switch (c) {
+            case ADDITION -> res= a + b;
+            case DIVISION -> {
+                if (a % b == 0) {
+                    res= a/b;
+                }
+            }
+            case SOUSTRACTION -> {
+                if(a-b>1){
+                    res= a-b;
+                }
+            }
+            case MULTIPLICATION -> res= a*b;
+        }
+        return res;
+    }
 }
