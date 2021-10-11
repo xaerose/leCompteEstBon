@@ -10,7 +10,7 @@ public class LeCompteEstBon {
     private ArrayList<String> lopeplusproche;
 
     public LeCompteEstBon(){
-        listeNombresAutorisees = new ArrayList<Integer>();
+        listeNombresAutorisees = new ArrayList<>();
         Collections.addAll(listeNombresAutorisees,1,2,3,4,5,6,7,8,9,10,25,50,75,100);
 
     }
@@ -38,6 +38,25 @@ public class LeCompteEstBon {
         }
     }
 
+    public void trierListe(ArrayList<Integer> liste){
+        for (int i = 0; i < liste.size() - 1; i++)
+        {
+            int index = i;
+            for (int j = i + 1; j < liste.size(); j++)
+            {
+                if (liste.get(j) >liste.get(index)){
+                    index = j;
+                }
+            }
+
+            int min = liste.get(index);
+            liste.remove(index);
+            liste.add(index,liste.get(i));
+            liste.remove(i);
+            liste.add(i,min);
+        }
+    }
+
     public void verifierPlusProche(int res,ArrayList<String> lope,int result){
         if(Math.abs(result-plusproche) > Math.abs(result-res)) {
             plusproche = res;
@@ -56,30 +75,30 @@ public class LeCompteEstBon {
                     int[] combinaison = combi.get(i);
                     int a = combinaison[0];
                     int b = combinaison[1];
-                    if((a+b)==result){
-                        trouve = true;
-                        lope.add(a+" + "+b+" = "+(a+b));
-                        lireListe(lope);
-                    }
-                    else{
-                        ArrayList<String> lope1 = (ArrayList<String>) lope.clone();
-                        lope1.add(a+" + "+b+" = "+(a+b));
-                        verifierPlusProche((a+b),lope1,result);
-                        trouve = this.compterBon(creerListe(liste,a,b,(a+b)),result,lope1);
+                    if(a!=1 && b!=1){
+                        if((a*b)==result){
+                            trouve = true;
+                            lope.add(a+" * "+b+" = "+(a*b));
+                            lireListe(lope);
+                        }
+                        else{
+                            ArrayList<String> lope1 = (ArrayList<String>) lope.clone();
+                            lope1.add(a+" * "+b+" = "+(a*b));
+                            verifierPlusProche((a*b),lope1,result);
+                            trouve = this.compterBon(creerListe(liste,a,b,(a*b)),result,lope1);
+                        }
                     }
                     if(!trouve){
-                        if(a!=1 && b!=1){
-                            if((a*b)==result){
-                                trouve = true;
-                                lope.add(a+" * "+b+" = "+(a*b));
-                                lireListe(lope);
-                            }
-                            else{
-                                ArrayList<String> lope1 = (ArrayList<String>) lope.clone();
-                                lope1.add(a+" * "+b+" = "+(a*b));
-                                verifierPlusProche((a*b),lope1,result);
-                                trouve = this.compterBon(creerListe(liste,a,b,(a*b)),result,lope1);
-                            }
+                        if((a+b)==result){
+                            trouve = true;
+                            lope.add(a+" + "+b+" = "+(a+b));
+                            lireListe(lope);
+                        }
+                        else{
+                            ArrayList<String> lope1 = (ArrayList<String>) lope.clone();
+                            lope1.add(a+" + "+b+" = "+(a+b));
+                            verifierPlusProche((a+b),lope1,result);
+                            trouve = this.compterBon(creerListe(liste,a,b,(a+b)),result,lope1);
                         }
                     }
                     if(!trouve){
@@ -154,7 +173,7 @@ public class LeCompteEstBon {
         Collections.addAll(nombresDonnes,nombres);
 
         LeCompteEstBon lceb = new LeCompteEstBon();
-
+        lceb.trierListe(nombresDonnes);
         if(!lceb.verifierNombresDonnes(nombresDonnes)){
             System.out.println("Les nombres donnees ne sont pas bons!");
             System.exit(1);
