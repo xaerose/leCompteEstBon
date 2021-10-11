@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -5,6 +6,8 @@ public class LeCompteEstBon {
 
     private ArrayList<Integer> listeNombresAutorisees;
     private static int iterations = 0;
+    private int plusproche = 0;
+    private ArrayList<String> lopeplusproche;
 
     public LeCompteEstBon(){
         listeNombresAutorisees = new ArrayList<Integer>();
@@ -28,7 +31,22 @@ public class LeCompteEstBon {
         return combi;
     }
 
-    public boolean compterBon(ArrayList<Integer> liste,int result){
+    public void lireListe(ArrayList<String> liste){
+        System.out.println("Liste de calculs:");
+        for (String s : liste) {
+            System.out.println(s);
+        }
+    }
+
+    public void verifierPlusProche(int res,ArrayList<String> lope,int result){
+        if(Math.abs(result-plusproche) > Math.abs(result-res)) {
+            plusproche = res;
+            lopeplusproche = (ArrayList<String>) lope.clone();
+        }
+
+    }
+
+    public boolean compterBon(ArrayList<Integer> liste,int result,ArrayList<String> lope){
         iterations++;
         boolean trouve=false;
         if(liste.size()>1){
@@ -40,25 +58,40 @@ public class LeCompteEstBon {
                     int b = combinaison[1];
                     if((a+b)==result){
                         trouve = true;
+                        lope.add(a+" + "+b+" = "+(a+b));
+                        lireListe(lope);
                     }
                     else{
-                        trouve = this.compterBon(creerListe(liste,a,b,(a+b)),result);
+                        ArrayList<String> lope1 = (ArrayList<String>) lope.clone();
+                        lope1.add(a+" + "+b+" = "+(a+b));
+                        verifierPlusProche((a+b),lope1,result);
+                        trouve = this.compterBon(creerListe(liste,a,b,(a+b)),result,lope1);
                     }
                     if(!trouve){
                         if((a*b)==result){
                             trouve = true;
+                            lope.add(a+" * "+b+" = "+(a*b));
+                            lireListe(lope);
                         }
                         else{
-                            trouve = this.compterBon(creerListe(liste,a,b,(a*b)),result);
+                            ArrayList<String> lope1 = (ArrayList<String>) lope.clone();
+                            lope1.add(a+" * "+b+" = "+(a*b));
+                            verifierPlusProche((a*b),lope1,result);
+                            trouve = this.compterBon(creerListe(liste,a,b,(a*b)),result,lope1);
                         }
                     }
                     if(!trouve){
                         if((a-b)>0){
                             if((a-b)==result){
                                 trouve = true;
+                                lope.add(a+" - "+b+" = "+(a-b));
+                                lireListe(lope);
                             }
                             else{
-                                trouve = this.compterBon(creerListe(liste,a,b,(a-b)),result);
+                                ArrayList<String> lope1 = (ArrayList<String>) lope.clone();
+                                lope1.add(a+" - "+b+" = "+(a-b));
+                                verifierPlusProche((a-b),lope1,result);
+                                trouve = this.compterBon(creerListe(liste,a,b,(a-b)),result,lope1);
                             }
                         }
                     }
@@ -66,15 +99,21 @@ public class LeCompteEstBon {
                         if((a%b)==0){
                             if((a/b)==result){
                                 trouve = true;
+                                lope.add(a+" / "+b+" = "+(a/b));
+                                lireListe(lope);
                             }
                             else{
-                                trouve = this.compterBon(creerListe(liste,a,b,(a*b)),result);
+                                ArrayList<String> lope1 = (ArrayList<String>) lope.clone();
+                                lope1.add(a+" / "+b+" = "+(a/b));
+                                verifierPlusProche((a/b),lope1,result);
+                                trouve = this.compterBon(creerListe(liste,a,b,(a*b)),result,lope1);
                             }
                         }
                     }
                     i++;
                 }
         }
+
         return trouve;
     }
 
@@ -88,5 +127,47 @@ public class LeCompteEstBon {
         newliste.remove((Integer) nb2);
         newliste.add(0,res);
         return newliste;
+    }
+
+    public int getPlusproche() {
+        return plusproche;
+    }
+
+    public ArrayList<String> getLopeplusproche() {
+        return lopeplusproche;
+    }
+//------------------------------------------------------------------------------------------------------------------------------------------
+
+    public static void main(String[] args) {
+
+        Integer[] nombres = new Integer[6];
+        for(int i=0;i<6;i++){
+            nombres[i]=Integer.parseInt(args[i]);
+        }
+        int but = Integer.parseInt(args[6]);
+        ArrayList<Integer> nombresDonnes = new ArrayList<>();
+        ArrayList<String> lope = new ArrayList<>();
+        Collections.addAll(nombresDonnes,nombres);
+
+        LeCompteEstBon lceb = new LeCompteEstBon();
+
+        if(!lceb.verifierNombresDonnes(nombresDonnes)){
+            System.out.println("Les nombres donnees ne sont pas bons!");
+            System.exit(1);
+        }
+        if(lceb.compterBon(nombresDonnes,but,lope)){
+            System.out.println("Trouvé");
+            System.out.println("Nombre d'itérations pour trouver");
+            System.out.println(lceb.getIterations());
+            System.exit(2);
+        }else{
+            System.out.println("Le plus proche");
+            System.out.println(lceb.getPlusproche());
+            lceb.lireListe(lceb.getLopeplusproche());
+            System.out.println("Nombre d'itérations pour trouver");
+            System.out.println(lceb.getIterations());
+            System.exit(3);
+        }
+
     }
 }
