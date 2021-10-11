@@ -39,8 +39,7 @@ public class LeCompteEstBon {
     }
 
     public void trierListe(ArrayList<Integer> liste){
-        for (int i = 0; i < liste.size() - 1; i++)
-        {
+        for (int i = 0; i < liste.size() - 1; i++) {
             int index = i;
             for (int j = i + 1; j < liste.size(); j++)
             {
@@ -48,7 +47,6 @@ public class LeCompteEstBon {
                     index = j;
                 }
             }
-
             int min = liste.get(index);
             liste.remove(index);
             liste.add(index,liste.get(i));
