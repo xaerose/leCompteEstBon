@@ -4,11 +4,12 @@ import java.util.Collections;
 public class LeCompteEstBon {
 
     private ArrayList<Integer> listeNombresAutorisees;
-    private int iterations;
+    private static int iterations = 0;
 
     public LeCompteEstBon(){
         listeNombresAutorisees = new ArrayList<Integer>();
         Collections.addAll(listeNombresAutorisees,1,2,3,4,5,6,7,8,9,10,25,50,75,100);
+
     }
 
     public boolean verifierNombresDonnes(ArrayList<Integer> liste){
@@ -44,6 +45,14 @@ public class LeCompteEstBon {
                         trouve = this.compterBon(creerListe(liste,a,b,(a+b)),result);
                     }
                     if(!trouve){
+                        if((a*b)==result){
+                            trouve = true;
+                        }
+                        else{
+                            trouve = this.compterBon(creerListe(liste,a,b,(a*b)),result);
+                        }
+                    }
+                    if(!trouve){
                         if((a-b)>0){
                             if((a-b)==result){
                                 trouve = true;
@@ -51,14 +60,6 @@ public class LeCompteEstBon {
                             else{
                                 trouve = this.compterBon(creerListe(liste,a,b,(a-b)),result);
                             }
-                        }
-                    }
-                    if(!trouve){
-                        if((a*b)==result){
-                            trouve = true;
-                        }
-                        else{
-                            trouve = this.compterBon(creerListe(liste,a,b,(a*b)),result);
                         }
                     }
                     if(!trouve){
