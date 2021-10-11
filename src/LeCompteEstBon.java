@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,37 +22,18 @@ public class LeCompteEstBon {
     public ArrayList<int[]> combinerComplets(ArrayList<Integer> liste){
         ArrayList<int[]> combi = new ArrayList<>();
         for(int i=0;i<liste.size();i++){
-            for (Integer integer : liste) {
-                if (!liste.get(i).equals(integer)) {
-                    combi.add(new int[]{liste.get(i), integer});
+            for(int j=0;j<liste.size();j++){
+                if(!liste.get(i).equals(liste.get(j))){
+                    combi.add(new int[]{liste.get(i),liste.get(j)});
                 }
             }
         }
         return combi;
     }
 
-    public void trierListe(ArrayList<Integer> liste){
-        for (int i = 0; i < liste.size() - 1; i++)
-        {
-            int index = i;
-            for (int j = i + 1; j < liste.size(); j++)
-            {
-                if (liste.get(j) >liste.get(index)){
-                    index = j;
-                }
-            }
-
-            int min = liste.get(index);
-            liste.remove(index);
-            liste.add(index,liste.get(i));
-            liste.remove(i);
-            liste.add(i,min);
-        }
-    }
-
-    public void lireListe(ArrayList liste){
+    public void lireListe(ArrayList<String> liste){
         System.out.println("Liste de calculs:");
-        for (Object s : liste) {
+        for (String s : liste) {
             System.out.println(s);
         }
     }
@@ -133,6 +113,7 @@ public class LeCompteEstBon {
                     i++;
                 }
         }
+
         return trouve;
     }
 
@@ -174,7 +155,6 @@ public class LeCompteEstBon {
             System.out.println("Les nombres donnees ne sont pas bons!");
             System.exit(1);
         }
-        lceb.trierListe(nombresDonnes);
         if(lceb.compterBon(nombresDonnes,but,lope)){
             System.out.println("Trouvé");
             System.out.println("Nombre d'itérations pour trouver");
