@@ -182,7 +182,8 @@ public class LeCompteEstBon {
             System.out.println(lceb.getIterations());
             System.exit(2);
         }else{
-            System.out.println("Le plus proche");
+            System.out.println("Pas de solution exacte");
+            System.out.println("Le plus proche:");
             System.out.println(lceb.getPlusproche());
             lceb.lireListe(lceb.getLopeplusproche());
             System.out.println("Nombre d'itérations pour trouver");
