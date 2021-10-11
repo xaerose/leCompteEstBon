@@ -68,16 +68,18 @@ public class LeCompteEstBon {
                         trouve = this.compterBon(creerListe(liste,a,b,(a+b)),result,lope1);
                     }
                     if(!trouve){
-                        if((a*b)==result){
-                            trouve = true;
-                            lope.add(a+" * "+b+" = "+(a*b));
-                            lireListe(lope);
-                        }
-                        else{
-                            ArrayList<String> lope1 = (ArrayList<String>) lope.clone();
-                            lope1.add(a+" * "+b+" = "+(a*b));
-                            verifierPlusProche((a*b),lope1,result);
-                            trouve = this.compterBon(creerListe(liste,a,b,(a*b)),result,lope1);
+                        if(a!=1 && b!=1){
+                            if((a*b)==result){
+                                trouve = true;
+                                lope.add(a+" * "+b+" = "+(a*b));
+                                lireListe(lope);
+                            }
+                            else{
+                                ArrayList<String> lope1 = (ArrayList<String>) lope.clone();
+                                lope1.add(a+" * "+b+" = "+(a*b));
+                                verifierPlusProche((a*b),lope1,result);
+                                trouve = this.compterBon(creerListe(liste,a,b,(a*b)),result,lope1);
+                            }
                         }
                     }
                     if(!trouve){
@@ -96,17 +98,19 @@ public class LeCompteEstBon {
                         }
                     }
                     if(!trouve){
-                        if((a%b)==0){
-                            if((a/b)==result){
-                                trouve = true;
-                                lope.add(a+" / "+b+" = "+(a/b));
-                                lireListe(lope);
-                            }
-                            else{
-                                ArrayList<String> lope1 = (ArrayList<String>) lope.clone();
-                                lope1.add(a+" / "+b+" = "+(a/b));
-                                verifierPlusProche((a/b),lope1,result);
-                                trouve = this.compterBon(creerListe(liste,a,b,(a*b)),result,lope1);
+                        if(b!=1){
+                            if((a%b)==0){
+                                if((a/b)==result){
+                                    trouve = true;
+                                    lope.add(a+" / "+b+" = "+(a/b));
+                                    lireListe(lope);
+                                }
+                                else{
+                                    ArrayList<String> lope1 = (ArrayList<String>) lope.clone();
+                                    lope1.add(a+" / "+b+" = "+(a/b));
+                                    verifierPlusProche((a/b),lope1,result);
+                                    trouve = this.compterBon(creerListe(liste,a,b,(a*b)),result,lope1);
+                                }
                             }
                         }
                     }
