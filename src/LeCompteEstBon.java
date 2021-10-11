@@ -22,9 +22,9 @@ public class LeCompteEstBon {
     public ArrayList<int[]> combinerComplets(ArrayList<Integer> liste){
         ArrayList<int[]> combi = new ArrayList<>();
         for(int i=0;i<liste.size();i++){
-            for(int j=0;j<liste.size();j++){
-                if(!liste.get(i).equals(liste.get(j))){
-                    combi.add(new int[]{liste.get(i),liste.get(j)});
+            for (Integer integer : liste) {
+                if (!liste.get(i).equals(integer)) {
+                    combi.add(new int[]{liste.get(i), integer});
                 }
             }
         }
