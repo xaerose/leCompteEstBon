@@ -176,6 +176,10 @@ public class LeCompteEstBon {
             System.out.println("Les nombres donnees ne sont pas bons!");
             System.exit(1);
         }
+        if(but<101 || but>999){
+            System.out.println("L'objectif n'est pas  compris entre 101 et 999!");
+            System.exit(4);
+        }
         if(lceb.compterBon(nombresDonnes,but,lope)){
             System.out.println("Trouvé");
             System.out.println("Nombre d'itérations pour trouver");
