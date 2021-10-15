@@ -1,8 +1,7 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class LeCompteEstBon {
+public class CompteEstBon {
 
     // ATTRIBUTS
     private ArrayList<Integer> listeNombresAutorisees;
@@ -24,7 +23,7 @@ public class LeCompteEstBon {
      * constructeur du compte est bon
      * une liste des nombres autorises est initalisee et remplie
      */
-    public LeCompteEstBon(){
+    public CompteEstBon(){
         listeNombresAutorisees = new ArrayList<>();
         Collections.addAll(listeNombresAutorisees,1,2,3,4,5,6,7,8,9,10,25,50,75,100);
 
@@ -241,7 +240,7 @@ public class LeCompteEstBon {
         ArrayList<String> lope = new ArrayList<>();
         Collections.addAll(nombresDonnes,nombres);
 
-        LeCompteEstBon lceb = new LeCompteEstBon();
+        CompteEstBon lceb = new CompteEstBon();
         lceb.trierListe(nombresDonnes);
         if(!lceb.verifierNombresDonnes(nombresDonnes)){
             System.out.println("Les nombres donnees ne sont pas bons!");
