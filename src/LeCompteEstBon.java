@@ -4,21 +4,45 @@ import java.util.Collections;
 
 public class LeCompteEstBon {
 
+    // ATTRIBUTS
     private ArrayList<Integer> listeNombresAutorisees;
+    /**
+     * nombre d'iteration realise pour trouver le resultat ou
+     */
     private static int iterations = 0;
+    /**
+     * entier plus proche du resultat souhaite
+     */
     private int plusproche = 0;
+    /**
+     * liste des operations pour un resultat au plus porhce de celui souhaite
+     */
     private ArrayList<String> lopeplusproche;
 
+
+    /**
+     * constructeur du compte est bon
+     * une liste des nombres autorises est initalisee et remplie
+     */
     public LeCompteEstBon(){
         listeNombresAutorisees = new ArrayList<>();
         Collections.addAll(listeNombresAutorisees,1,2,3,4,5,6,7,8,9,10,25,50,75,100);
 
     }
 
+    /**
+     * @param liste la liste d entier pour effectuer les operations
+     * @return un boolean prenant la valeur true si les nombres choisis respectent les convetions etablies
+     */
     public boolean verifierNombresDonnes(ArrayList<Integer> liste){
         return listeNombresAutorisees.containsAll(liste);
     }
 
+
+    /**
+     * @param liste la liste d entier pour effectuer les operations
+     * @return une nouvelle arraylist de tableaux permettant d etablir les combinaisons possibles
+     */
     public ArrayList<int[]> combinerComplets(ArrayList<Integer> liste){
         ArrayList<int[]> combi = new ArrayList<>();
         for(int i=0;i<liste.size();i++){
@@ -31,6 +55,10 @@ public class LeCompteEstBon {
         return combi;
     }
 
+    /**
+     * methode permettant de lire la liste des operations effectuees
+     * @param liste la liste a lire
+     */
     public void lireListe(ArrayList<String> liste){
         System.out.println("Liste de calculs:");
         for (String s : liste) {
@@ -38,6 +66,11 @@ public class LeCompteEstBon {
         }
     }
 
+
+    /**
+     * methode triant la liste dans l ordre decroissant pour optimiser le programme
+     * @param liste la liste a trier
+     */
     public void trierListe(ArrayList<Integer> liste){
         for (int i = 0; i < liste.size() - 1; i++) {
             int index = i;
@@ -55,14 +88,27 @@ public class LeCompteEstBon {
         }
     }
 
+
+    /**
+     * @param res
+     * @param lope la liste d operation a cloner
+     * @param result
+     */
     public void verifierPlusProche(int res,ArrayList<String> lope,int result){
         if(Math.abs(result-plusproche) > Math.abs(result-res)) {
             plusproche = res;
             lopeplusproche = (ArrayList<String>) lope.clone();
         }
-
     }
 
+
+    /**
+     * methode recursive visant a trouver un nombre compris entre 101 et 999 avec une liste de nombres choisis parmi ceux conseilles
+     * @param liste la liste d entiers permettant de mener au resultat
+     * @param result le resultat final suppose trouve a la fin du programme
+     * @param lope la liste d operations effectuees pour mener au result
+     * @return un boolean prenant la valeur true dans le cas ou le result a ete trouve apres un nombre n d iterations recursives
+     */
     public boolean compterBon(ArrayList<Integer> liste,int result,ArrayList<String> lope){
         iterations++;
         boolean trouve=false;
@@ -138,10 +184,24 @@ public class LeCompteEstBon {
         return trouve;
     }
 
+
+    /**
+     * getter du nb d iterations
+     * @return le nombre d iterations effectuees+
+     */
     public int getIterations() {
         return iterations;
     }
 
+
+    /**
+     * methode creant une liste a partir de la precedente, supprimant deux nombres pour inserer le res de l operation de ces derniers
+     * @param liste la liste de nombres
+     * @param nb1 opérateur 1
+     * @param nb2 opérateur 2
+     * @param res resultat de l operation entre nb1 et nb2
+     * @return une nouvelle liste de taille n-1 (ou n est la taille de la precedente)
+     */
     public ArrayList<Integer> creerListe(ArrayList<Integer> liste,int nb1,int nb2,int res){
         ArrayList<Integer> newliste = (ArrayList<Integer>) liste.clone();
         newliste.remove((Integer) nb1);
@@ -150,15 +210,26 @@ public class LeCompteEstBon {
         return newliste;
     }
 
+
+    /**
+     * @return le nb le plus proche
+     */
     public int getPlusproche() {
         return plusproche;
     }
 
+    /**
+     * @return la liste d operations du nb le plus proche
+     */
     public ArrayList<String> getLopeplusproche() {
         return lopeplusproche;
     }
 //------------------------------------------------------------------------------------------------------------------------------------------
 
+
+    /**
+     * @param args arguments rentres en parametre pour run le programme
+     */
     public static void main(String[] args) {
 
         Integer[] nombres = new Integer[6];
